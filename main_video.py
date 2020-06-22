@@ -24,24 +24,24 @@ upper_green2 = np.array([90,255,255])
 engines = []
 
 #stop engine
-stop_path = ".\emplate\stop_temp"
+stop_path = "./Template/stop"
 stop_engine = engine(stop_path, lower_red1, upper_red1, lower_red2, upper_red2, "stop",0.5)
-engines.append(stop_engine)
+# engines.append(stop_engine)
 
 #yeild engine
-yeild_path = ".\emplate\yeild_temp"
+yeild_path = "./Template/yeild"
 yeild_engine = engine(yeild_path, lower_red1, upper_red1, lower_red2, upper_red2, "yeild",1)
 engines.append(yeild_engine)
 
 #warning engine
-warn_path = ".\emplate\warn_temp"
+warn_path = "./Template/warn"
 warn_engine = engine(warn_path, lower_yellow1, upper_yellow1, lower_yellow2, upper_yellow2, "warning",1.5)
-engines.append(warn_engine)
+# engines.append(warn_engine)
 
 #direction engine
-direction_path = ".\emplate\direc_temp"
+direction_path = "./Template/direc"
 direction_engine = engine(direction_path, lower_green1, upper_green1, lower_green2, upper_green2, "direction",2)
-engines.append(direction_engine)
+# engines.append(direction_engine)
 
 #initilaize engines
 for engine in engines:
@@ -49,16 +49,18 @@ for engine in engines:
     engine.create_templates_mask()
 
 # compute image result
-cap = cv2.VideoCapture('.\data\demo_video_fail.avi')
+cap = cv2.VideoCapture('./data/video.mp4')
 
 while (cap.isOpened()) :
     _, frame = cap.read()
     img = frame
     for engine in engines:
         result_temp,val_temp,temp = engine.compute(frame)
-        if result_temp == True:
-            img = cv2.bitwise_or(img, temp)
+        # if result_temp == True:
+        img = cv2.bitwise_or(img, temp)
     cv2.imshow('frame', img)
+    print(result_temp)
+    print(val_temp)
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break

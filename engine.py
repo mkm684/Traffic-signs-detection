@@ -20,9 +20,10 @@ class engine:
     def create_templates(self):
         for i in range(0,4):
             path = self.file_path+str(i+1)+".jpg"
-            stop_template = cv2.imread(path)
-            self.templates.append(stop_template.copy())
-            self.templates_hsv.append(cv2.cvtColor(stop_template, cv2.COLOR_BGR2HSV))
+            print(path)
+            pic_template = cv2.imread(path)
+            self.templates.append(pic_template.copy())
+            self.templates_hsv.append(cv2.cvtColor(pic_template, cv2.COLOR_BGR2HSV))
 
     def create_templates_mask(self):
         for i in range(0,4):
@@ -36,7 +37,7 @@ class engine:
         return closing
 
     def max_contours(self, filtered_img):
-        im1, contours, hierarchy = cv2.findContours(filtered_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+        contours, hierarchy = cv2.findContours(filtered_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
         if not contours:
             return 0
         c = max(contours, key = cv2.contourArea)
